@@ -93,17 +93,9 @@ Before an interview, Cue tests the whole pipeline on your machine. It even plays
 
 ## ⚙️ How it works
 
-```mermaid
-flowchart LR
-    SA["🔊 System audio<br/>(loopback)"] --> W
-    MIC["🎤 Microphone"] --> W
-    W["Local Whisper server<br/>faster-whisper · CUDA<br/>energy VAD · partials"] -- "partial + final text<br/>(WebSocket)" --> O["🪟 Live overlay"]
-    O -- "question detected" --> P["Prompt builder<br/>resume · instructions<br/>BM25 document search"]
-    SS["📸 Ctrl+Shift+S"] --> P
-    P --> C["Claude pool<br/>3 pre-started, primed<br/>Claude Code processes"]
-    C -- "streamed tokens" --> O
-    O -- "End" --> N["📝 AI notes · 📚 Question bank · ⬇ export"]
-```
+<div align="center"><img src="docs/architecture.png" alt="Cue architecture: audio to local Whisper to overlay to prompt builder to Claude pool and back" width="100%"/></div>
+
+<sub>Diagram source: <a href="docs/architecture.mmd"><code>docs/architecture.mmd</code></a></sub>
 
 **The two tricks behind the speed:**
 
