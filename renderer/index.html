@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; media-src 'self' blob: mediastream:; connect-src 'self' ws://127.0.0.1:*" />
+  <title>Cue</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="side">
+      <div class="brand"><img src="../assets/icon.png" alt="" /> Cue</div>
+      <button class="nav active" data-view="sessions">🎙️ Call Sessions</button>
+      <button class="nav" data-view="questions">❓ Question Bank</button>
+      <button class="nav" data-view="resume">📄 Resume</button>
+      <button class="nav" data-view="check">✅ Interview Check</button>
+      <button class="nav" data-view="settings">⚙️ Settings</button>
+      <div class="foot">Hotkeys during a session:<br />Ctrl+Shift+A answer<br />Ctrl+Shift+S screenshot<br />Ctrl+Shift+H hide/show</div>
+    </aside>
+    <main id="view"></main>
+  </div>
+  <script src="../node_modules/marked/lib/marked.umd.js"></script>
+  <script src="lib.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+  <script src="pages.js"></script>
+</body>
+</html>

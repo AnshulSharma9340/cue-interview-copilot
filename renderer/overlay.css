@@ -1,0 +1,56 @@
+body { background: #101614; color: #e6efe9; display: flex; flex-direction: column; height: 100vh; overflow: hidden; font-size: 14px; }
+.bar { -webkit-app-region: drag; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; background: #18211d; border-bottom: 1px solid #26312c; }
+.bar button, .bar input { -webkit-app-region: no-drag; }
+.meters { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #9fb0a7; }
+.meter { display: flex; align-items: center; gap: 5px; }
+.meter .dot { width: 8px; height: 8px; border-radius: 50%; background: #4a5650; }
+.meter.on .dot { background: #e5484d; box-shadow: 0 0 0 3px rgba(229,72,77,.18); }
+.meter.off { opacity: .45; }
+.meter i { width: 36px; height: 4px; border-radius: 3px; background: #2a3530; overflow: hidden; display: inline-block; }
+.meter i b { display: block; height: 100%; width: 0; background: #3ecf7a; transition: width .05s; }
+.timer { font-variant-numeric: tabular-nums; margin-left: 4px; }
+.tools { display: flex; gap: 5px; align-items: center; }
+.tb { border: 1px solid #2f3b35; background: #222d28; color: #e6efe9; border-radius: 8px; padding: 5px 10px; font-size: 13px; font-weight: 500; }
+.tb:hover { background: #2a3731; }
+.tb kbd { font: 11px var(--mono); color: #8da197; margin-left: 4px; }
+.tb.main { background: #1f9d55; border-color: #1f9d55; color: #fff; }
+.tb.main kbd { color: #d4f5e2; }
+.tb.toggle.active { background: #1f3a2b; border-color: #1f9d55; color: #6fe3a0; }
+.tb.icon { width: 30px; padding: 5px 0; text-align: center; }
+.tb.end { background: #e5484d; border-color: #e5484d; color: #fff; }
+.tb:disabled { opacity: .5; }
+.body { flex: 1; display: grid; grid-template-columns: 34% 1fr; min-height: 0; }
+.body.no-tr { grid-template-columns: 1fr; }
+.body.no-tr .transcript { display: none; }
+.pane { display: flex; flex-direction: column; min-height: 0; }
+.transcript { border-right: 1px solid #26312c; background: #131a17; }
+.ph { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #7d8f86; padding: 8px 12px 4px; }
+.scroll { overflow: auto; padding: 6px 12px 12px; flex: 1; }
+.line { margin-bottom: 7px; line-height: 1.4; font-size: 13px; }
+.line b { color: #6fe3a0; font-weight: 600; }
+.line.me b { color: #7aa7ff; }
+.line.pending { color: #7d8f86; font-style: italic; }
+.card-a { background: #172019; border: 1px solid #26312c; border-radius: 12px; padding: 10px 14px; margin-bottom: 10px; }
+.card-a .lbl { font-size: 11px; color: #7d8f86; display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.card-a .lbl span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card-a.err { border-color: #6b2b2d; color: #ffb4b6; }
+.card-a .prose { color: #e6efe9; font-size: 14.5px; }
+.card-a .prose strong { color: #fff; }
+.card-a .prose p { margin: 4px 0; }
+.card-a .prose ul { margin: 4px 0; padding-left: 18px; }
+.card-a .prose pre { background: #0a0f0d; border: 1px solid #222c27; }
+.card-a img.shot { max-width: 100%; max-height: 140px; object-fit: contain; display: block; border-radius: 6px; margin: 4px 0 6px; opacity: .85; }
+.cursor::after { content: '▍'; animation: blink 1s steps(1) infinite; color: #6fe3a0; }
+@keyframes blink { 50% { opacity: 0; } }
+.chat { display: flex; gap: 6px; padding: 8px 10px; border-top: 1px solid #26312c; background: #18211d; }
+.chat input { background: #101614; border: 1px solid #2f3b35; color: #e6efe9; border-radius: 8px; padding: 7px 10px; }
+.chat input:focus { box-shadow: none; border-color: #1f9d55; }
+.welcome { color: #9fb0a7; padding: 20px 6px; line-height: 1.6; }
+.welcome b { color: #e6efe9; }
+.mock-q { background: #172019; border: 1px solid #1f9d55; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+.mock-q .fb { color: #9fb0a7; font-size: 13px; margin-bottom: 8px; }
+.mock-q .q { font-size: 16px; font-weight: 600; color: #fff; }
+.mock-a { color: #c5d4cb; font-size: 14px; padding: 4px 2px 10px; }
+.mock-actions { display: flex; gap: 6px; margin-bottom: 14px; }
+#toasts .toast { background: #2a3731; }
+#toasts .toast.error { background: #e5484d; }

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; media-src 'self' blob: mediastream:; connect-src 'self' ws://127.0.0.1:*" />
+  <title>Cue – Live session</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="overlay.css" />
+</head>
+<body>
+  <header class="bar">
+    <div class="meters">
+      <div class="meter" id="m-them" title="Other side (system audio)"><span class="dot"></span>Them<i><b></b></i></div>
+      <div class="meter" id="m-me" title="Your microphone"><span class="dot"></span>Me<i><b></b></i></div>
+      <span class="timer" id="timer">0:00</span>
+    </div>
+    <div class="tools">
+      <button class="tb main" id="b-answer" title="Ctrl+Shift+A">Answer <kbd>⌃⇧A</kbd></button>
+      <button class="tb" id="b-shot" title="Ctrl+Shift+S">Screenshot <kbd>⌃⇧S</kbd></button>
+      <button class="tb toggle" id="b-auto" title="Auto-answer detected questions">Auto</button>
+      <button class="tb icon" id="b-tr" title="Show/hide transcript">☰</button>
+      <button class="tb icon" id="b-fade" title="Transparency">◐</button>
+      <button class="tb icon" id="b-min" title="Minimize (Ctrl+Shift+H hides)">–</button>
+      <button class="tb end" id="b-end">End</button>
+    </div>
+  </header>
+  <div class="body" id="body">
+    <section class="pane transcript" id="transcript"><div class="ph">Transcript</div><div class="scroll" id="lines"></div></section>
+    <section class="pane answers"><div class="scroll" id="feed"></div></section>
+  </div>
+  <form class="chat" id="chat">
+    <input type="text" id="chat-in" placeholder="Message the AI privately… (Enter to send)" autocomplete="off" />
+    <button class="tb" type="submit">Send</button>
+  </form>
+  <script src="../node_modules/marked/lib/marked.umd.js"></script>
+  <script src="lib.js"></script>
+  <script src="audio.js"></script>
+  <script src="overlay.js"></script>
+</body>
+</html>
