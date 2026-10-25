@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="340" viewBox="0 0 1280 340" role="img" aria-label="Cue – real-time AI interview copilot">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1410"/>
+      <stop offset="0.55" stop-color="#10241a"/>
+      <stop offset="1" stop-color="#0d3a24"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.8" cy="0.2" r="0.6">
+      <stop offset="0" stop-color="#2fd17a" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#2fd17a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#9ff0c2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="340" rx="24" fill="url(#bg)"/>
+  <rect width="1280" height="340" rx="24" fill="url(#glow)"/>
+
+  <!-- waveform -->
+  <g fill="#2fd17a" opacity="0.18" transform="translate(100 0)">
+    <rect x="760" y="150" width="10" height="40" rx="5"/><rect x="784" y="120" width="10" height="100" rx="5"/>
+    <rect x="808" y="95" width="10" height="150" rx="5"/><rect x="832" y="130" width="10" height="80" rx="5"/>
+    <rect x="856" y="80" width="10" height="180" rx="5"/><rect x="880" y="110" width="10" height="120" rx="5"/>
+    <rect x="904" y="140" width="10" height="60" rx="5"/><rect x="928" y="100" width="10" height="140" rx="5"/>
+    <rect x="952" y="70" width="10" height="200" rx="5"/><rect x="976" y="115" width="10" height="110" rx="5"/>
+    <rect x="1000" y="145" width="10" height="50" rx="5"/><rect x="1024" y="125" width="10" height="90" rx="5"/>
+    <rect x="1048" y="100" width="10" height="140" rx="5"/><rect x="1072" y="135" width="10" height="70" rx="5"/>
+    <rect x="1096" y="155" width="10" height="30" rx="5"/><rect x="1120" y="140" width="10" height="60" rx="5"/>
+  </g>
+
+  <!-- logo -->
+  <g transform="translate(72 92)">
+    <rect width="112" height="112" rx="28" fill="#1f9d55"/>
+    <rect x="20" y="26" width="72" height="50" rx="16" fill="#fff"/>
+    <path d="M36 74 L30 94 L54 76 Z" fill="#fff"/>
+    <g fill="#1f9d55"><rect x="33" y="44" width="5" height="14" rx="2.5"/><rect x="43" y="38" width="5" height="26" rx="2.5"/><rect x="53" y="42" width="5" height="18" rx="2.5"/><rect x="63" y="35" width="5" height="32" rx="2.5"/><rect x="73" y="43" width="5" height="16" rx="2.5"/></g>
+  </g>
+
+  <text x="214" y="160" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="84" font-weight="800" fill="url(#title)" letter-spacing="-2">Cue</text>
+  <text x="218" y="204" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="27" font-weight="600" fill="#e6efe9">Real-time AI copilot for interviews &amp; calls</text>
+  <text x="218" y="244" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="19" fill="#9fb0a7">Hears the question · writes the answer in ~3 s · no API keys · runs on your PC</text>
+
+  <g font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600">
+    <rect x="218" y="270" width="160" height="34" rx="17" fill="#173a28" stroke="#2fd17a" stroke-opacity="0.5"/>
+    <text x="298" y="292" text-anchor="middle" fill="#9ff0c2">⚡ Local Whisper</text>
+    <rect x="390" y="270" width="150" height="34" rx="17" fill="#173a28" stroke="#2fd17a" stroke-opacity="0.5"/>
+    <text x="465" y="292" text-anchor="middle" fill="#9ff0c2">🧠 Claude-powered</text>
+    <rect x="552" y="270" width="190" height="34" rx="17" fill="#173a28" stroke="#2fd17a" stroke-opacity="0.5"/>
+    <text x="647" y="292" text-anchor="middle" fill="#9ff0c2">💾 Saved only on your PC</text>
+  </g>
+</svg>

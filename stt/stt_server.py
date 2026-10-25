@@ -25,6 +25,16 @@ MAX_UTTERANCE_S = 25.0
 PARTIAL_EVERY_S = 0.9
 MIN_SPEECH_S = 0.3
 
+def words(s):
+    return re.sub(r"[^a-z0-9 ]", " ", s.lower()).split()
+
+
+def echoes_hint(text, hint):
+    """On near-silence Whisper tends to repeat its initial prompt back; drop text made of the hint's words."""
+    t, h = words(text), set(words(hint))
+    return bool(t) and bool(h) and sum(w in h for w in t) / len(t) >= 0.8
+
+
 HALLUCINATION = re.compile(r"^(thank you\.?|thanks for watching!?|thank you for watching\.?|you|bye\.?|\.+|subtitles by .*|please subscribe.*|okay\.?)$", re.I)
 
 
@@ -95,6 +105,7 @@ class Stream:
         self.noise = 0.003
         self.last_partial = 0.0
         self.prompt = ""
+        self.hint = ""
         self.final_lock = asyncio.Lock()
 
     def utter_audio(self):
@@ -141,7 +152,7 @@ class Stream:
 
     async def send_partial(self, audio):
         text = await self.engine.transcribe(audio, self.language, self.prompt)
-        if text and self.in_speech:
+        if text and self.in_speech and not echoes_hint(text, self.hint):
             await self.send({"type": "partial", "text": text})
 
     def finalize(self):
@@ -161,6 +172,8 @@ class Stream:
                 await self.send({"type": "partial", "text": ""})
                 return
             text = await self.engine.transcribe(audio, self.language, self.prompt, beam=2)
+            if echoes_hint(text, self.hint):
+                text = ""
             if text:
                 self.prompt = (self.prompt + " " + text)[-200:]
             await self.send({"type": "final", "text": text})
@@ -206,7 +219,8 @@ async def main():
             return
         stream = Stream(engine, ws, cfg.get("language", "en"), bool(cfg.get("partials", True)))
         # Vocabulary hint (role, tech names) so Whisper spells domain words right.
-        stream.prompt = str(cfg.get("prompt", ""))[-200:]
+        stream.hint = str(cfg.get("prompt", ""))[-200:]
+        stream.prompt = stream.hint
         await stream.send({"type": "ready", "device": device})
         async for msg in ws:
             if isinstance(msg, (bytes, bytearray)):

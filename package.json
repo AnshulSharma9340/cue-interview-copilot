@@ -3,6 +3,24 @@
   "productName": "Cue",
   "version": "2.0.0",
   "description": "Real-time AI call and interview assistant: live transcription, AI answers, screenshots, notes and mock interviews.",
+  "author": "Anshul Sharma <anshulsharma7162@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/AnshulSharma9340/cue-interview-copilot#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnshulSharma9340/cue-interview-copilot.git"
+  },
+  "keywords": [
+    "ai",
+    "interview",
+    "copilot",
+    "whisper",
+    "claude",
+    "electron",
+    "real-time",
+    "transcription",
+    "meeting-assistant"
+  ],
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -11,10 +29,28 @@
   "build": {
     "appId": "local.cue.copilot",
     "productName": "Cue",
-    "directories": { "output": "dist" },
-    "files": ["main.js", "preload.js", "src/**/*", "renderer/**/*", "stt/**/*", "assets/**/*", "node_modules/**/*", "package.json"],
-    "asarUnpack": ["stt/**"],
-    "win": { "target": ["nsis"], "icon": "assets/icon.png" },
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "renderer/**/*",
+      "stt/**/*",
+      "assets/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "stt/**"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.png"
+    },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
