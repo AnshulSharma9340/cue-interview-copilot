@@ -1,0 +1,28 @@
+name: ✨ Feature request
+description: Suggest an idea or improvement for Cue
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the situation in a call or interview where Cue falls short.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: This is not a stealth / anti-proctoring feature (those are out of scope for Cue)
+          required: true

@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Syntax check (Node + Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check JavaScript
+        run: |
+          set -e
+          for f in main.js preload.js src/*.js renderer/*.js; do
+            node --check "$f"
+            echo "ok  $f"
+          done
+
+      - name: Check Python
+        run: python -m py_compile stt/stt_server.py && echo "ok  stt/stt_server.py"
+
+      - name: Validate package.json
+        run: node -e "const p=require('./package.json'); if(!p.name||!p.version||!p.main) process.exit(1); console.log(p.name+'@'+p.version)"

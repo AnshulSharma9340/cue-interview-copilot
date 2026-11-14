@@ -1,0 +1,58 @@
+name: 🐛 Bug report
+description: Something in Cue is broken or behaves unexpectedly
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report this. Please don't paste API keys or private transcripts.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Create an Interview session
+        2. Press Start
+        3. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Transcription (Whisper / STT server)
+        - Answers (Claude pool / other provider)
+        - Screenshot solve
+        - Overlay / UI
+        - Mock interview
+        - Meeting auto-detect
+        - Installer / startup
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Cue version
+      placeholder: "2.0.0"
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: Windows version, GPU (or CPU only), Python version
+      placeholder: "Windows 11 23H2, RTX 3060, Python 3.11"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Anything from the Interview Check page or the DevTools console (Ctrl+Shift+I)
+      render: text

@@ -7,8 +7,13 @@
 **Cue listens to your call, catches the question, and has the answer on your screen ~3 seconds after the other person stops talking.**<br/>
 Free, open source, no API keys. Speech recognition runs on your own GPU.
 
+<sub>🔬 An open-source rebuild of the <a href="https://www.parakeet-ai.com/">Parakeet AI</a> interview copilot, reverse-engineered from its public web app and rebuilt from scratch. <a href="#-reverse-engineered-from-parakeet-ai">How it was done ↓</a></sub>
+
 <br/>
 
+[![CI](https://img.shields.io/github/actions/workflow/status/AnshulSharma9340/cue-interview-copilot/ci.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/AnshulSharma9340/cue-interview-copilot/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/AnshulSharma9340/cue-interview-copilot?style=for-the-badge&color=7c3aed)](https://github.com/AnshulSharma9340/cue-interview-copilot/releases/latest)
+[![Parakeet AI alternative](https://img.shields.io/badge/Parakeet%20AI-open%20source%20alternative-14b8a6?style=for-the-badge)](#-reverse-engineered-from-parakeet-ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-1f9d55.svg?style=for-the-badge)](LICENSE)
 [![Platform](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?style=for-the-badge&logo=windows&logoColor=white)](#-quick-start)
 [![Electron](https://img.shields.io/badge/Electron-33-47848F?style=for-the-badge&logo=electron&logoColor=white)](https://www.electronjs.org/)
@@ -19,7 +24,7 @@ Free, open source, no API keys. Speech recognition runs on your own GPU.
 [![GitHub stars](https://img.shields.io/github/stars/AnshulSharma9340/cue-interview-copilot?style=social)](https://github.com/AnshulSharma9340/cue-interview-copilot/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/AnshulSharma9340/cue-interview-copilot?style=social)](https://github.com/AnshulSharma9340/cue-interview-copilot/network/members)
 
-[**Features**](#-features) · [**How it works**](#-how-it-works) · [**Quick start**](#-quick-start) · [**Speed**](#-speed-measured-not-promised) · [**FAQ**](#-faq) · [**Roadmap**](#-roadmap)
+[**Features**](#-features) · [**Reverse engineering**](#-reverse-engineered-from-parakeet-ai) · [**How it works**](#-how-it-works) · [**Quick start**](#-quick-start) · [**Speed**](#-speed-measured-not-promised) · [**FAQ**](#-faq) · [**Roadmap**](#-roadmap)
 
 <br/>
 
@@ -43,6 +48,26 @@ Real-time interview and meeting copilots are great until you see the price, arou
 | Where transcripts live | Their database | **Only on your PC** |
 | Answer latency | ~1–3 s | **~3 s** (measured below) |
 | Can you read the code? | No | **Every line** |
+
+---
+
+## 🔬 Reverse-engineered from Parakeet AI
+
+Cue started as a teardown of **[Parakeet AI](https://www.parakeet-ai.com/)**, a popular paid real-time interview copilot. The goal was to understand how its pipeline works, then rebuild every piece with free, local parts.
+
+**Method.** The public `parakeet-ai.com` web client (a Next.js / Turbopack app) was analysed with the REA reverse-engineering toolkit, with Ghidra available for native code. The shipped client bundle exposes the *names* of the server-side services it is wired to. That was enough to map the architecture:
+
+| Pipeline stage | What Parakeet AI uses | What Cue uses instead |
+|---|---|---|
+| Speech-to-text | Speechmatics streaming STT (cloud, metered) | **faster-whisper `large-v3-turbo`** on your GPU, streamed over a local WebSocket ([`stt/stt_server.py`](stt/stt_server.py)) |
+| Answer generation | OpenAI / Anthropic / Google / Cerebras through Vercel AI Gateway and AWS Bedrock | **A pool of pre-started, primed Claude Code processes** ([`src/claude-direct.js`](src/claude-direct.js)), or Groq / Gemini / OpenAI / Ollama |
+| Resume and document context | Pinecone vector search (RAG) | **In-process BM25 search**, with no vector DB and no server ([`src/rag.js`](src/rag.js)) |
+| Realtime transport | Ably pub/sub | **Local IPC + WebSocket**: nothing leaves the machine except the LLM call |
+| Accounts and billing | Subscription | **None** |
+
+**What was *not* taken.** Cue contains **no Parakeet AI code, assets or binaries**. Everything here was written from scratch. The paid desktop app was not cracked or redistributed. The stealth layer some copilots ship (hiding from screen share, hiding the process, evading proctoring) was **deliberately not reproduced**.
+
+> ⚠️ Cue is an independent project. It is **not affiliated with, endorsed by or sponsored by Parakeet AI**. "Parakeet AI" is a trademark of its owner and is used here only to describe what this project was modelled on.
 
 ---
 
@@ -127,7 +152,11 @@ Measured on a laptop with an **RTX 2050 (4 GB)**. A question was spoken through 
 - **Python 3.10+** with `pip install faster-whisper websockets`. For GPU speed, also install a CUDA build of PyTorch (`pip install torch --index-url https://download.pytorch.org/whl/cu121`); without it Cue uses the CPU.
 - **[Claude Code](https://claude.com/claude-code)**, installed and signed in (`claude` on PATH or in `~/.local/bin`). Cue uses your Claude plan, so there's no API key to manage.
 
-### Run
+### Option A: install
+
+Download **`Cue-Setup-2.0.0.exe`** from the [latest release](https://github.com/AnshulSharma9340/cue-interview-copilot/releases/latest) and run it. It's a per-user install, so no admin rights are needed. You still need Python and Claude Code from the requirements above.
+
+### Option B: run from source
 
 ```bash
 git clone https://github.com/AnshulSharma9340/cue-interview-copilot.git
@@ -244,7 +273,7 @@ No, and that's deliberate. Cue doesn't hide itself from screen sharing, task man
 
 ## 🤝 Contributing
 
-Issues and PRs are welcome. Good first issues: new meeting-app rules in `src/meetings.js`, more languages in `src/languages.js`, and UI polish.
+Issues and PRs are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first. Good first issues: new meeting-app rules in `src/meetings.js`, more languages in `src/languages.js`, and UI polish. Found a security problem? Follow [SECURITY.md](SECURITY.md) and don't open a public issue.
 
 ```bash
 npm start                               # dev run
